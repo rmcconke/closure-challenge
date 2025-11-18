@@ -1,0 +1,3 @@
+.python-version
+.venv__pycache__/
+*.pyc
