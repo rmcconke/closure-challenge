@@ -1,8 +1,7 @@
 import numpy as np
 from pathlib import Path
 
-
-def ground_truth():
+def _ground_truth():
     data_path = Path(__file__).parent / "data" / "ground_truth_test.npz"
     raw = np.load(data_path)
 
@@ -29,10 +28,10 @@ def evaluation_grid(case):
     """
     Get the x, y, z coordinates for the evaluation grid.
     """
-    return ground_truth()[case]['coords']
+    return _ground_truth()[case]['coords']
 
-def velocity_field(case):
+def _velocity_field(case):
     """
     Get the velocity field for a given case.
     """
-    return ground_truth()[case]['U']
+    return _ground_truth()[case]['U']

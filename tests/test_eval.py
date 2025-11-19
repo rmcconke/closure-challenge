@@ -1,20 +1,21 @@
 import numpy as np
-from closure_challenge import score, evaluate_by_case, case_names, velocity_field
+from closure_challenge import score, evaluate_by_case, case_names
+from closure_challenge.dataset_utils import _velocity_field
 
 def test_perfect_prediction_score_is_zero():
     predictions = dict.fromkeys(case_names())
     for case in case_names():
-        predictions[case] = velocity_field(case)
+        predictions[case] = _velocity_field(case)
     assert score(predictions) == 0
 
 def test_imperfect_prediction_score_is_positive():
     predictions = dict.fromkeys(case_names())
     for case in case_names():
-        predictions[case] = velocity_field(case) * 0.9
+        predictions[case] = _velocity_field(case) * 0.9
     assert score(predictions) > 0
 
     for case in case_names():
-        predictions[case] = velocity_field(case) * 1.1
+        predictions[case] = _velocity_field(case) * 1.1
     assert score(predictions) > 0
 
 def test_scores_are_similar_scale():
@@ -26,7 +27,7 @@ def test_scores_are_similar_scale():
     predictions = {}
 
     for case in case_names():
-        U_true = velocity_field(case)
+        U_true = _velocity_field(case)
 
         # noise level = 10% of mean(|U_true|)
         scale = np.mean(np.abs(U_true))
@@ -42,7 +43,3 @@ def test_scores_are_similar_scale():
     # Require max/min <= 1.25  (i.e., within 25%)
     assert max_score / min_score <= 1.25
 
-
-test_perfect_prediction_score_is_zero()
-test_imperfect_prediction_score_is_positive()
-test_scores_are_similar_scale()
