@@ -24,9 +24,9 @@ def case_names():
     cases = [k.split("/", 1)[0] for k in raw.keys()]
     return list(dict.fromkeys(cases))  # deduplicate, preserve order
 
-def evaluation_grid(case):
+def evaluation_points(case):
     """
-    Get the x, y, z coordinates for the evaluation grid.
+    Get the x, y, z coordinates for the evaluation points.
     """
     return _ground_truth()[case]['coords']
 

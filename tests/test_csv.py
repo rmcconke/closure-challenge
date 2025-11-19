@@ -1,5 +1,5 @@
 import numpy as np
-from closure_challenge import score, score_from_csv, case_names, evaluation_grid, evaluate_from_csv_by_case
+from closure_challenge import score, score_from_csv, case_names, evaluation_points, evaluate_from_csv_by_case
 from closure_challenge.dataset_utils import _velocity_field
 
 def test_csv_loading():
@@ -9,7 +9,7 @@ def test_csv_loading():
         np.savetxt(f"tests/example_submission/{case}.csv", predictions[case], delimiter=',')
         np.savetxt(f"tests/example_submission/{case}_spaces.csv", predictions[case], delimiter=' ')
         np.savetxt(f"tests/example_submission/{case}_tabs.csv", predictions[case], delimiter='\t')
-        points = evaluation_grid(case)
+        points = evaluation_points(case)
         np.savetxt(f"tests/example_submission/{case}_points.csv", points, delimiter=',')
     assert score_from_csv("tests/example_submission") == 0
 

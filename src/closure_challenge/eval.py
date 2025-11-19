@@ -1,5 +1,5 @@
 import numpy as np
-from .dataset_utils import _ground_truth, case_names, evaluation_grid, _velocity_field
+from .dataset_utils import _ground_truth, case_names, evaluation_points, _velocity_field
 from pathlib import Path
 
 def score(predictions):

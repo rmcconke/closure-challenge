@@ -45,3 +45,8 @@ packages = ["src/closure_challenge"]
 
 [tool.hatch.version]
 path = "src/closure_challenge/__init__.py"
+
+[dependency-groups]
+dev = [
+    "scipy>=1.10.1",
+]

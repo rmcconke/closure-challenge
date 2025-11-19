@@ -8,35 +8,36 @@ pip install closure-challenge
 ```
 
 ## Quick Start
-You need to interpolate your data onto the evaluation grid:
+You need to interpolate your data onto the evaluation points:
 ```python
-from closure_challenge import evaluation_grid
-x, y, z = evaluation_grid(case)
+from closure_challenge import evaluation_points
+xyz_eval = evaluation_points(case) #(1000,3) numpy array for each case
 ```
 
 Then, there are **2 ways** to get your score from the package:
 ### Method 1: Direct scoring, using python
 
 ```python
-from closure_challenge import score, evaluation_grid, case_names
+from closure_challenge import score, evaluation_points, case_names
+from scipy.interpolate import griddata # interpolation method/library is up to you
+
+your_grid_points = {...}   # Dict[case_name -> (N, 3) array of xyz coordinates]
+your_model_results = {...} # Dict[case_name -> (N, 3) array of velocity vectors]
 
 predictions = {}
-
-# Interpolate your results onto the evaluation grid
 for case in case_names():
-    # Get target grid for this case
-    x, y, z = evaluation_grid(case)
-    
-    # You have predictions on your own grid
-    U_your_grid = your_model_results[case]  
-    x_your, y_your, z_your = your_grid_coordinates[case]
-    
-    # Interpolate onto evaluation grid (example using scipy, but you can use whatever you like to interpolate)
-    from scipy.interpolate import griddata
-    points = np.column_stack([x_your.ravel(), y_your.ravel(), z_your.ravel()])
-    U_pred = griddata(points, U_your_grid.ravel(), (x, y, z))
+    # your model predictions on your grid
+    xyz_your_points = your_grid_points[case]
+    U_your_points = your_model_results[case]  
+
+    # evaluation_points returns shape (1000, 3) where columns are [x, y, z]
+    xyz_eval = evaluation_points(case)       
+
+    # again, interpolation method/library is up to you
+    U_pred = griddata(xyz_your_points, U_your_points, xyz_eval, method='nearest') 
     
     predictions[case] = U_pred
+
 
 final_score = score(predictions)
 ```
@@ -84,7 +85,7 @@ The benchmark uses scaled Mean Absolute Error (MAE). Each case's error is normal
 ## Available functions
 i.e., you can do `from closure_challenge import`:
 - `case_names()` - List of test cases
-- `evaluation_grid(case)` - Get evaluation (x, y, z) coordinates for a case
+- `evaluation_points(case)` - Get evaluation (x, y, z) coordinates for a case
 - `score(predictions)` - Calculate final benchmark score (see Method 1 above)
 - `evaluate_by_case(predictions)` - Get individual case scores returned (Method 1)
 - `score_from_csv(path)` - Calculate final benchmark score from CSV files (see Method 2 above)
@@ -92,7 +93,7 @@ i.e., you can do `from closure_challenge import`:
 
 ## Test Cases
 
-The current scoring set includes these cases:
+The current scoring set includes these cases, which you can get by
 - `alpha_15_13929_4048`
 - `alpha_15_13929_2024`
 - `alpha_05_4071_4048`
@@ -103,4 +104,11 @@ The current scoring set includes these cases:
 - `PHLL10595`
 - `CBFS13700`
 
-**Reminder: DO NOT *train* or *validate* on any of these cases. In order words, you cannot use them during training in any way. This violates the challenge rules.**
+You can get these names using
+```python
+from closure_challenge import case_names
+print(case_names())
+```
+
+
+**Reminder: DO NOT *train* or *validate* on any of these cases. In other words, you cannot use them during training in any way. This violates the challenge rules.**
