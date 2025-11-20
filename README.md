@@ -1,5 +1,7 @@
 # Closure Challenge
 
+[![PyPI version](https://badge.fury.io/py/closure-challenge.svg)](https://badge.fury.io/py/closure-challenge)
+
 A benchmark challenge for evaluating machine learning-augmented RANS closure models. The main challenge page is [https://github.com/rmcconke/closure-challenge-benchmark](https://github.com/rmcconke/closure-challenge-benchmark). This repo is for the evaluation source code.
 
 ## Installation
