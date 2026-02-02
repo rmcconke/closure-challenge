@@ -56,14 +56,13 @@ You can pass in either:
 - `AR_1_Ret_360.csv`
 - `AR_3_Ret_360.csv`
 - `AR_14_Ret_180.csv`
-- `PHLL10595.csv`
-- `CBFS13700.csv`
+- `NASA_2DWMH.csv`
 
 ```python
 from closure_challenge import score_from_csv
 final_score = score_from_csv("path/to/predictions/")
 ```
-2. A dictionary containing paths to your interpolated predictions for each of the test cases.
+1. A dictionary containing paths to your interpolated predictions for each of the test cases.
 
 ```python
 from closure_challenge import score_from_csv
@@ -75,8 +74,7 @@ final_score = score_from_csv({
     "AR_1_Ret_360": "path/to/your/AR_1_Ret_360/predictions.csv",
     "AR_3_Ret_360": "path/to/your/AR_3_Ret_360/predictions.csv",
     "AR_14_Ret_180": "path/to/your/AR_14_Ret_180/predictions.csv",
-    "PHLL10595": "path/to/your/PHLL10595/predictions.csv",
-    "CBFS13700": "path/to/your/CBFS13700/predictions.csv",
+    "NASA_2DWMH": "path/to/your/NASA_2DWMH/predictions.csv"
 })
 ```
 
@@ -103,8 +101,7 @@ The current scoring set includes these cases, which you can get by
 - `AR_1_Ret_360`
 - `AR_3_Ret_360`
 - `AR_14_Ret_180`
-- `PHLL10595`
-- `CBFS13700`
+- `NASA_2DWMH`
 
 You can get these names using
 ```python
